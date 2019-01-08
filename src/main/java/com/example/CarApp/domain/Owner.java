@@ -13,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 public class Owner {
@@ -22,8 +25,11 @@ public class Owner {
   private String firstname, lastname;
   
 	
-@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-	private Set<Car> cars;
+
+@OneToMany(cascade = CascadeType.ALL, mappedBy="owner")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
+      private List<Car> cars;
 
 
 
@@ -57,11 +63,11 @@ public class Owner {
     this.lastname = lastname;
   }
 
-  public Set<Car> getCars() {
+  public List<Car> getCars() {
 	    return cars;
 	  }
 
-	  public void setCars(Set<Car> cars) {
+	  public void setCars(List<Car> cars) {
 	    this.cars = cars;
 	  }
 }

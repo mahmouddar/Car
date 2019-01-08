@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Car {
@@ -38,8 +39,11 @@ public class Car {
 	private int year, price;
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	
 	@JoinColumn(name = "owner")
+	 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Owner owner;
 	
 	   @ManyToMany(cascade = CascadeType.MERGE)

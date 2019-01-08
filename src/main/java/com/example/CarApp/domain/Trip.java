@@ -22,9 +22,7 @@ public class Trip {
 
 	@ManyToMany(mappedBy = "trips") 
      private Set<Car> cars = new HashSet<Car>(0);
-	public Trip() {
 
-	}
 
 	public Trip(String name) {
 		super();

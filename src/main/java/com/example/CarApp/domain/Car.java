@@ -1,11 +1,16 @@
 package com.example.CarApp.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -22,7 +27,8 @@ public class Car {
 		this.registerNumber = registerNumber;
 		this.year = year;
 		this.price = price;
-		this.owner = owner;
+		this.owner=owner;
+		
 	}
 
 	@Id
@@ -31,11 +37,19 @@ public class Car {
 	private String brand, model, color, registerNumber;
 	private int year, price;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner")
-    private Owner owner;
+	@JoinColumn(name = "owner")
+	private Owner owner;
+	
+	   @ManyToMany(cascade = CascadeType.MERGE)
+	      @JoinTable(name = "car_trips", joinColumns = { @JoinColumn(name =
+	       "id") }, inverseJoinColumns = { @JoinColumn(name = "tripid") }) 
+	private Set<Trip> trips;
 
 
+
+  
 	public long getId() {
 		return id;
 	}
@@ -92,11 +106,11 @@ public class Car {
 		this.price = price;
 	}
 
-	public Owner getOwner() {
-		return owner;
-	}
+    public Owner getOwners() {
+        return owner;
+      }
 
-	public void setOwner(Owner owner) {
-		this.owner = owner;
-	}
+      public void setOwners(Owner owners) {
+        this.owner = owners;
+      }
 }
